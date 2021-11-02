@@ -1,9 +1,9 @@
 require('dotenv').config()
 
 const tmi = require('tmi.js');
-var robot = require("robotjs");
-var ks = require('node-key-sender');
-const sendKeys = require('sendkeys-macos');
+// var robot = require("robotjs");
+// var ks = require('node-key-sender');
+// const sendKeys = require('sendkeys-macos');
 const { exec } = require('child_process');
 const {ObsWs} = require('./obs');
 
@@ -24,14 +24,13 @@ const {ObsWs} = require('./obs');
   const client = new tmi.client(opts);
 
   // Register our event handlers (defined below)
-
   client.on('message', onMessageHandler);
   client.on('connected', onConnectedHandler);
   client.on('join', (channel, username) => {
-    if(!['ecuationable', 'cyndyka', 'ftopayr', 'nightbot', 'Own3d', 'nightbot', 'own3d', 'anotherttvviewer', 'droopdoggg', 'uncle_spawn', 'sophikal'].includes(username)) {
-      console.log(`* User ${username} has joined.`);
-      defaultText();
-    }
+    // if(!['lurxx', 'icewizerds','ecuationable', 'cyndyka', 'ftopayr', 'nightbot', 'Own3d', 'nightbot', 'own3d', 'anotherttvviewer', 'droopdoggg', 'uncle_spawn', 'sophikal'].includes(username)) {
+    //   console.log(`* User ${username} has joined.`);
+    //   defaultText();
+    // }
   });
 
 // Connect to Twitch:
@@ -104,7 +103,7 @@ client.connect();
   async function hideMainCam() {
     const itemName = 'Main cam group';
     const currentStatus = await OBS.getItemCurrentStatus(itemName);
-    if(!currentStatus.visible) return;
+    if( ! currentStatus.visible) return;
 
     OBS.hideItemFromCurrentScene(itemName);
   

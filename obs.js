@@ -34,9 +34,8 @@ const ObsWs = {
         this.setItemVisibleTo(itemName, true);
     },
     async setItemVisibleTo(itemName, status) {
+        console.log(itemName, status);
         const currentScene = await this.getCurrentScene();
-        // const currentItemProperties = await this.getItemCurrentStatus(currentScene, itemName);
-        // console.log(currentItemProperties);
         await this.obs.send('SetSceneItemProperties', {
             'scene-name': currentScene.name,
             visible: status,
