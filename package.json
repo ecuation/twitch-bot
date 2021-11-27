@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src/App.ts",
-    "dev": "nodemon bot.js"
+    "dev": "nodemon app.js",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "@types/node": "^16.11.4",
     "node-key-sender": "^1.0.11",
     "nodemon": "^2.0.14",
+    "prettier": "^2.5.0",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
   }

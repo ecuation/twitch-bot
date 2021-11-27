@@ -1,5 +1,4 @@
-
-import ObsWebSocket = require("obs-websocket-js");
+import ObsWebSocket = require('obs-websocket-js');
 
 export interface Scene {
     messageId: string;

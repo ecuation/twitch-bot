@@ -1,13 +1,11 @@
-
 require('dotenv').config();
 import { OBSConnector } from './Obs/Obs';
 
 class App {
-
     OBSConnector: OBSConnector;
 
     constructor() {
-        this.OBSConnector = new OBSConnector;
+        this.OBSConnector = new OBSConnector();
     }
 }
 (async () => {
@@ -15,5 +13,5 @@ class App {
     await OBSManager.connect();
 
     const currentScene = await OBSManager.getCurrentScene();
-    if(currentScene.name !== 'Gameplay') OBSManager.switchToScene('Gameplay');
+    if (currentScene.name !== 'Gameplay') OBSManager.switchToScene('Gameplay');
 })();

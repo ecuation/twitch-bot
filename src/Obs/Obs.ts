@@ -1,8 +1,7 @@
-import ObsWebSocket = require("obs-websocket-js");
-import { Scene } from '../Shared/Models'
+import ObsWebSocket = require('obs-websocket-js');
+import { Scene } from '../Shared/Models';
 
 export class OBSConnector {
-
     obs: ObsWebSocket;
 
     constructor() {
@@ -10,15 +9,14 @@ export class OBSConnector {
     }
 
     async connect(): Promise<void> {
-        try{
+        try {
             await this.obs.connect({
-                address: process.env.OBS_HOST, 
+                address: process.env.OBS_HOST,
                 password: process.env.OBS_PASSWORD
             });
 
             console.log('OBS connection success!');
-        
-        }catch (error) {
+        } catch (error) {
             console.log('OBS cannot be connected: ', error);
         }
     }
@@ -29,10 +27,8 @@ export class OBSConnector {
                 'scene-name': sceneName
             });
             console.log(`Scene changed to: ${sceneName}`);
-            
-        }catch(error){
+        } catch (error) {
             console.log('Scene cannot be changed: ', error);
-            
         }
     }
 
@@ -42,7 +38,7 @@ export class OBSConnector {
                 const scene = await this.obs.send('GetCurrentScene');
                 resolve(scene);
             } catch (error) {
-                reject(error);                
+                reject(error);
             }
         });
     }
