@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@types/node": "^16.11.4",
+    "@types/tmi.js": "^1.8.1",
     "node-key-sender": "^1.0.11",
     "nodemon": "^2.0.14",
     "prettier": "^2.5.0",

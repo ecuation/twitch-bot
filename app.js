@@ -32,6 +32,12 @@ const { ObsWs } = require('./obs');
         // }
     });
 
+    client.on('raided', function (channel, username, viewers) {
+        console.log('the channel name: ', channel);
+        console.log('the username: ', username);
+        console.log('viewers: ', viewers);
+    });
+
     // Connect to Twitch:
     client.connect();
     // Called every time a message comes in

@@ -37,28 +37,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 require('dotenv').config();
-var Obs_1 = require("./Obs/Obs");
+var Twitch_1 = require("./Twitch");
 var App = /** @class */ (function () {
     function App() {
-        this.OBSConnector = new Obs_1.OBSConnector;
+        this.twitchClient = new Twitch_1.TwitchAPI();
     }
     return App;
 }());
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var OBSManager, currentScene;
+    var twitchClient;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                OBSManager = new App().OBSConnector;
-                return [4 /*yield*/, OBSManager.connect()];
-            case 1:
-                _a.sent();
-                return [4 /*yield*/, OBSManager.getCurrentScene()];
-            case 2:
-                currentScene = _a.sent();
-                if (currentScene.name !== 'Gameplay')
-                    OBSManager.switchToScene('Gameplay');
-                return [2 /*return*/];
-        }
+        twitchClient = new App().twitchClient;
+        twitchClient.connect();
+        return [2 /*return*/];
     });
 }); })();
+//# sourceMappingURL=App.js.map

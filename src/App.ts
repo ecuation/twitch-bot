@@ -1,17 +1,14 @@
 require('dotenv').config();
-import { OBSConnector } from './Obs/Obs';
+import { TwitchAPI } from './Twitch';
 
 class App {
-    OBSConnector: OBSConnector;
-
+    twitchClient: TwitchAPI;
     constructor() {
-        this.OBSConnector = new OBSConnector();
+        this.twitchClient = new TwitchAPI();
     }
 }
-(async () => {
-    const OBSManager = new App().OBSConnector;
-    await OBSManager.connect();
 
-    const currentScene = await OBSManager.getCurrentScene();
-    if (currentScene.name !== 'Gameplay') OBSManager.switchToScene('Gameplay');
+(async () => {
+    const twitchClient = new App().twitchClient;
+    twitchClient.connect();
 })();

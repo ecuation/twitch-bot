@@ -1,5 +1,5 @@
 import ObsWebSocket = require('obs-websocket-js');
-import { Scene } from '../Shared/Models';
+import { itemProperties, Scene } from '../Shared/Models';
 
 export class OBSConnector {
     obs: ObsWebSocket;
@@ -40,6 +40,35 @@ export class OBSConnector {
             } catch (error) {
                 reject(error);
             }
+        });
+    }
+
+    async getItemCurrentStatus(itemName: string): Promise<itemProperties> {
+        const currentScene = await this.getCurrentScene();
+        return await this.obs.send('GetSceneItemProperties', {
+            'scene-name': currentScene.name,
+            item: { name: itemName }
+        });
+    }
+
+    async showItemFromCurrentScene(itemName: string) {
+        await this.setItemVisibleTo(itemName, true);
+    }
+
+    async hideItemFromCurrentScene(itemName: string) {
+        await this.setItemVisibleTo(itemName, false);
+    }
+
+    async setItemVisibleTo(itemName: string, status: boolean) {
+        const currentScene = await this.getCurrentScene();
+        await this.obs.send('SetSceneItemProperties', {
+            'scene-name': currentScene.name,
+            visible: status,
+            item: { name: itemName },
+            bounds: {},
+            scale: {},
+            crop: {},
+            position: {}
         });
     }
 }

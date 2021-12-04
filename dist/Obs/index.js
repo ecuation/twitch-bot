@@ -186,4 +186,4 @@ var OBSConnector = /** @class */ (function () {
     return OBSConnector;
 }());
 exports.OBSConnector = OBSConnector;
-//# sourceMappingURL=Obs.js.map
+//# sourceMappingURL=index.js.map
