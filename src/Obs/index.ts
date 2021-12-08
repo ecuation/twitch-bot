@@ -1,5 +1,5 @@
 import ObsWebSocket = require('obs-websocket-js');
-import { itemProperties, Scene } from '../Shared/Models';
+import { ItemProperties, Scene } from '../Shared/Models';
 
 export class OBSConnector {
     obs: ObsWebSocket;
@@ -43,7 +43,7 @@ export class OBSConnector {
         });
     }
 
-    async getItemCurrentStatus(itemName: string): Promise<itemProperties> {
+    async getItemCurrentStatus(itemName: string): Promise<ItemProperties> {
         const currentScene = await this.getCurrentScene();
         return await this.obs.send('GetSceneItemProperties', {
             'scene-name': currentScene.name,

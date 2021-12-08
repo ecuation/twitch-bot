@@ -38,7 +38,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.OBSConnector = void 0;
 var ObsWebSocket = require("obs-websocket-js");
-require('dotenv').config();
 var OBSConnector = /** @class */ (function () {
     function OBSConnector() {
         this.obs = new ObsWebSocket();
@@ -162,9 +161,7 @@ var OBSConnector = /** @class */ (function () {
             var currentScene;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log(itemName, status);
-                        return [4 /*yield*/, this.getCurrentScene()];
+                    case 0: return [4 /*yield*/, this.getCurrentScene()];
                     case 1:
                         currentScene = _a.sent();
                         return [4 /*yield*/, this.obs.send('SetSceneItemProperties', {

@@ -41,6 +41,7 @@ var tmi = require("tmi.js");
 var Obs_1 = require("../Obs");
 var TwitchAPI = /** @class */ (function () {
     function TwitchAPI() {
+        var _this = this;
         this.client = new tmi.client({
             identity: {
                 username: process.env.TWITCH_USER,
@@ -49,8 +50,31 @@ var TwitchAPI = /** @class */ (function () {
             channels: ['ecuationable']
         });
         this.obs = new Obs_1.OBSConnector();
-        this.client.on('message', this.onMessageHandler);
+        this.commands = {
+            '!camfuera': 'hideMainCam',
+            '!fullscreen': 'fullScreenScene',
+            '!welcome': 'welcomeMessage'
+        };
+        this.lastTimeRaided = new Date();
+        this.lastTimeRaided = this.addMinutes(new Date(), 1);
+        this.client.on('message', function (target, context, msg, self) {
+            _this.onMessageHandler(target, context, msg, self);
+        });
+        this.client.on('raided', function (channel, username, viewers) {
+            _this.lastTimeRaided = _this.addMinutes(new Date(), 5);
+            _this.writeMessage("El usuario " + username + " ha enviado una raid con " + viewers + " espectadores. Gracias!");
+        });
+        this.client.on('join', function (channel, username) {
+            var currentTime = new Date();
+            var lastTimeRaided = _this.lastTimeRaided;
+            if (currentTime.valueOf() > lastTimeRaided.valueOf()) {
+                _this.welcomeMessage();
+            }
+        });
     }
+    TwitchAPI.prototype.addMinutes = function (date, minutes) {
+        return new Date(date.getTime() + minutes * 60000);
+    };
     TwitchAPI.prototype.connect = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -82,20 +106,14 @@ var TwitchAPI = /** @class */ (function () {
     };
     TwitchAPI.prototype.onMessageHandler = function (target, context, msg, self) {
         return __awaiter(this, void 0, void 0, function () {
-            var commandName;
+            var commandName, dynamicMethod;
             return __generator(this, function (_a) {
                 if (self) {
                     return [2 /*return*/];
                 } // Ignore messages from the bot
                 commandName = msg.trim();
-                if (commandName === '!camfuera') {
-                    try {
-                        this;
-                    }
-                    catch (error) {
-                        console.log('error: ', error);
-                    }
-                }
+                dynamicMethod = this.commands[commandName];
+                this[dynamicMethod]();
                 return [2 /*return*/];
             });
         });
@@ -149,13 +167,15 @@ var TwitchAPI = /** @class */ (function () {
             });
         });
     };
+    TwitchAPI.prototype.writeMessage = function (message) {
+        this.client.say('ecuationable', message);
+    };
+    TwitchAPI.prototype.welcomeMessage = function () {
+        this.writeMessage("Escribe !r para reproducir tu mensaje.");
+        this.writeMessage("Comandos disponibles: !saludo, !fua, !reanimacion, !reglas");
+        this.writeMessage("Comandos stream: !camfuera, !wenanoshe, !cerrar, !grande, !peque\u00F1a");
+    };
     return TwitchAPI;
 }());
 exports.TwitchAPI = TwitchAPI;
-// (async () => {
-//     const twitch = new TwitchAPI();
-//     await twitch.connectOBS();
-//     await twitch.hideMainCam();
-//     console.log(twitch);
-// })();
 //# sourceMappingURL=index.js.map

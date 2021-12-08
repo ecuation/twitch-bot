@@ -7,7 +7,7 @@ export interface Scene {
     sources: ObsWebSocket.SceneItem[];
 }
 
-export interface itemProperties {
+export interface ItemProperties {
     messageId: string;
     status: 'ok';
     name: string;
@@ -26,4 +26,10 @@ export interface itemProperties {
     scale: { x: number; y: number; filter: string };
     crop: { top: number; right: number; bottom: number; left: number };
     bounds: { type: string; alignment: number; x: number; y: number };
+}
+
+export interface Commands {
+    '!camfuera': 'hideMainCam';
+    '!fullscreen': 'fullScreenScene';
+    '!welcome': 'welcomeMessage';
 }
