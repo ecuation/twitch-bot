@@ -19,8 +19,8 @@ class App {
 (async () => {
     const botsDB = new BotsDB();
     botsDB.writeFile();
-    // console.log(botsMap.includes('philderbeast'));
-    // const twitchClient = new App().twitchClient;
+    console.log(botsDB.checkUserIsHuman('nightbot'));
+    const twitchClient = new App().twitchClient;
     // twitchClient.connect();
     // const db = new Database();
     // const user = { username: 'Manolo el del bombo' };
