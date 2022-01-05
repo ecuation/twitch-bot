@@ -33,3 +33,11 @@ export interface Commands {
     '!fullscreen': 'fullScreenScene';
     '!welcome': 'welcomeMessage';
 }
+
+export interface User {
+    username: string;
+}
+
+export interface Store {
+    insertNewBot(doc: User): Promise<void>;
+}

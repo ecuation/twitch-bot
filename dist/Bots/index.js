@@ -36,89 +36,62 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var tmi = require("tmi.js");
-var Obs_1 = require("../Obs/Obs");
-var TwitchAPI = /** @class */ (function () {
-    function TwitchAPI() {
-        this.client = new tmi.client({
-            identity: {
-                username: process.env.TWITCH_USER,
-                password: process.env.TWITCH_PASSWORD
-            },
-            channels: ['ecuationable']
-        });
-        this.obs = new Obs_1.OBSConnector();
-        this.client.connect();
-        this.client.on('message', this.onMessageHandler);
+exports.BotsDB = void 0;
+var fs = require("fs");
+var node_fetch_1 = require("node-fetch");
+var BotsDB = /** @class */ (function () {
+    function BotsDB() {
+        this.jsonPath = globalThis.appRoot + "/Database/bots.json";
     }
-    TwitchAPI.prototype.connectOBS = function () {
+    BotsDB.prototype.writeFile = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.obs.connect()];
+                    case 0: return [4 /*yield*/, this.apiCall()];
                     case 1:
-                        _a.sent();
+                        data = _a.sent();
+                        fs.writeFileSync(this.jsonPath, JSON.stringify(data), 'utf-8');
                         return [2 /*return*/];
                 }
             });
         });
     };
-    TwitchAPI.prototype.onMessageHandler = function (target, context, msg, self) {
-        if (self) {
-            return;
-        } // Ignore messages from the bot
-        var commandName = msg.trim();
-        if (commandName === '!camfuera')
-            this.hideMainCam();
-    };
-    TwitchAPI.prototype.hideMainCam = function () {
+    BotsDB.prototype.apiCall = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var itemName, currentStatus;
-            var _this = this;
+            var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        itemName = 'Main cam group';
-                        return [4 /*yield*/, this.obs.getItemCurrentStatus(itemName)];
+                    case 0: return [4 /*yield*/, (0, node_fetch_1["default"])('https://api.twitchinsights.net/v1/bots/all')];
                     case 1:
-                        currentStatus = _a.sent();
-                        if (!currentStatus.visible)
-                            return [2 /*return*/];
-                        return [4 /*yield*/, this.obs.hideItemFromCurrentScene(itemName)];
-                    case 2:
-                        _a.sent();
-                        setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0: return [4 /*yield*/, this.obs.showItemFromCurrentScene(itemName)];
-                                    case 1:
-                                        _a.sent();
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); }, 3000);
-                        return [2 /*return*/];
+                        response = _a.sent();
+                        return [2 /*return*/, response.json()];
                 }
             });
         });
     };
-    return TwitchAPI;
+    BotsDB.prototype.readFile = function () {
+        var data = fs.readFileSync(this.jsonPath, {
+            encoding: 'utf8',
+            flag: 'r'
+        });
+        return data;
+    };
+    BotsDB.prototype.mapBots = function (file) {
+        var botsDB = JSON.parse(file.toString()).bots;
+        return botsDB.map(function (user) {
+            return user[0];
+        });
+    };
+    BotsDB.prototype.getMappedBots = function () {
+        var bots = this.readFile();
+        return this.mapBots(bots);
+    };
+    BotsDB.prototype.checkUserIsHuman = function (username) {
+        var bots = this.getMappedBots();
+        return bots.includes(username);
+    };
+    return BotsDB;
 }());
-(function () { return __awaiter(void 0, void 0, void 0, function () {
-    var twitch;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                twitch = new TwitchAPI();
-                return [4 /*yield*/, twitch.connectOBS()];
-            case 1:
-                _a.sent();
-                return [4 /*yield*/, twitch.hideMainCam()];
-            case 2:
-                _a.sent();
-                console.log(twitch);
-                return [2 /*return*/];
-        }
-    });
-}); })();
-//# sourceMappingURL=twitch.js.map
+exports.BotsDB = BotsDB;
+//# sourceMappingURL=index.js.map

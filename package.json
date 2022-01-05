@@ -1,30 +1,35 @@
 {
-  "name": "twitch",
-  "version": "1.0.0",
-  "description": "",
-  "main": "bot.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/App.ts",
-    "dev": "nodemon app.js",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^10.0.0",
-    "obs-websocket-js": "^4.0.3",
-    "robotjs": "^0.6.0",
-    "sendkeys-macos": "^1.3.0",
-    "tmi.js": "^1.8.3"
-  },
-  "devDependencies": {
-    "@types/node": "^16.11.4",
-    "@types/tmi.js": "^1.8.1",
-    "node-key-sender": "^1.0.11",
-    "nodemon": "^2.0.14",
-    "prettier": "^2.5.0",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.4.4"
-  }
+    "name": "twitch",
+    "version": "1.0.0",
+    "description": "",
+    "main": "bot.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "ts-node src/App.ts",
+        "dev": "nodemon src/App.ts",
+        "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^10.0.0",
+        "nedb": "^1.8.0",
+        "node-fetch": "^2.6.6",
+        "obs-websocket-js": "^4.0.3",
+        "robotjs": "^0.6.0",
+        "sendkeys-macos": "^1.3.0",
+        "tmi.js": "^1.8.3"
+    },
+    "devDependencies": {
+        "@types/nedb": "^1.8.12",
+        "@types/node": "^16.11.4",
+        "@types/node-fetch": "^2.5.12",
+        "@types/tmi.js": "^1.8.1",
+        "node-key-sender": "^1.0.11",
+        "nodemon": "^2.0.14",
+        "prettier": "^2.5.0",
+        "ts-node": "^10.4.0",
+        "ts-node-dev": "^1.1.8",
+        "typescript": "^4.4.4"
+    }
 }

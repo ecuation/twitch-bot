@@ -36,25 +36,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var dotenv = require("dotenv");
-var Twitch_1 = require("./Twitch");
+exports.Database = void 0;
+var Nedb = require("nedb");
 var path = require("path");
-var Bots_1 = require("./Bots");
-dotenv.config();
-global.appRoot = path.resolve(__dirname);
-var App = /** @class */ (function () {
-    function App() {
-        this.twitchClient = new Twitch_1.TwitchAPI();
+var Database = /** @class */ (function () {
+    function Database() {
+        var pathDir = path.join(__dirname);
+        this.database = new Nedb(pathDir + "/database.db");
+        this.database.loadDatabase();
     }
-    return App;
+    Database.prototype.updateBotsDB = function () { };
+    Database.prototype.checkIsAHuman = function () { };
+    Database.prototype.insertNewBot = function (user) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        _this.database.insert(user, function (err, docs) {
+                            if (err) {
+                                return reject(err);
+                            }
+                            return resolve(docs);
+                        });
+                    })];
+            });
+        });
+    };
+    return Database;
 }());
-(function () { return __awaiter(void 0, void 0, void 0, function () {
-    var botsDB, data;
-    return __generator(this, function (_a) {
-        botsDB = new Bots_1.BotsDB();
-        data = botsDB.checkUserIsHuman('ecuationable');
-        console.log('data: ', data);
-        return [2 /*return*/];
-    });
-}); })();
-//# sourceMappingURL=App.js.map
+exports.Database = Database;
+//# sourceMappingURL=index.js.map

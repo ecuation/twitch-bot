@@ -55,7 +55,6 @@ var TwitchAPI = /** @class */ (function () {
             '!fullscreen': 'fullScreenScene',
             '!welcome': 'welcomeMessage'
         };
-        this.lastTimeRaided = new Date();
         this.lastTimeRaided = this.addMinutes(new Date(), 1);
         this.client.on('message', function (target, context, msg, self) {
             _this.onMessageHandler(target, context, msg, self);
@@ -113,7 +112,8 @@ var TwitchAPI = /** @class */ (function () {
                 } // Ignore messages from the bot
                 commandName = msg.trim();
                 dynamicMethod = this.commands[commandName];
-                this[dynamicMethod]();
+                if (dynamicMethod)
+                    this[dynamicMethod]();
                 return [2 /*return*/];
             });
         });
@@ -178,4 +178,8 @@ var TwitchAPI = /** @class */ (function () {
     return TwitchAPI;
 }());
 exports.TwitchAPI = TwitchAPI;
+// 1. Necesito base de datos de bots (yes)
+// 2. Cuando un usuario se une al chat comprobar que no es un bot
+// si es un bot no muestro mensaje
+// si es humano muestro mensaje
 //# sourceMappingURL=index.js.map

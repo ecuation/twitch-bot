@@ -2,6 +2,7 @@ import tmi = require('tmi.js');
 import { ChatUserstate } from 'tmi.js';
 import { OBSConnector } from '../Obs';
 import { Commands } from '../Shared/Models';
+import { BotsDB } from '../Bots';
 
 export class TwitchAPI {
     client = new tmi.client({
@@ -45,8 +46,11 @@ export class TwitchAPI {
         this.client.on('join', (channel, username) => {
             const currentTime = new Date();
             const lastTimeRaided = this.lastTimeRaided;
+            const botDB = new BotsDB();
             if (currentTime.valueOf() > lastTimeRaided.valueOf()) {
-                this.welcomeMessage();
+                if (botDB.checkUserIsHuman(username)) {
+                    this.welcomeMessage();
+                }
             }
         });
     }
@@ -116,3 +120,8 @@ export class TwitchAPI {
         );
     }
 }
+
+// 1. Necesito base de datos de bots (yes)
+// 2. Cuando un usuario se une al chat comprobar que no es un bot
+// si es un bot no muestro mensaje
+// si es humano muestro mensaje
